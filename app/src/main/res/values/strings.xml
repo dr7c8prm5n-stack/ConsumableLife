@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cartalog</string>
+    <string name="brand_caption">내 차 소모품 카탈로그 · Pleos Connect</string>
+
+    <!-- 항목 (명세 v2.0 3장, 아이오닉 5 EV 10개) -->
+    <string name="item_BATTERY_12V">12V 보조배터리</string>
+    <string name="item_WIPER">와이퍼 블레이드</string>
+    <string name="item_CABIN_FILTER">공조 장치용 에어필터</string>
+    <string name="item_HV_BATTERY">고전압 배터리</string>
+    <string name="item_TIRE_ROTATION">타이어 위치 교환</string>
+    <string name="item_COOLANT">냉각수(전력전자·배터리)</string>
+    <string name="item_BRAKE_PAD">브레이크 패드</string>
+    <string name="item_BRAKE_FLUID">브레이크액</string>
+    <string name="item_REDUCER_OIL">감속기 오일</string>
+    <string name="item_TIRE_REPLACE">타이어(마모)</string>
+    <string name="item_custom_fallback">사용자 항목</string>
+
+    <!-- 주기 종류 (DG2-I1·I2) -->
+    <string name="kind_REPLACE">정기 교체</string>
+    <string name="kind_INSPECT">정기 점검</string>
+    <string name="kind_USER">상태 기반 · 사용자 설정</string>
+    <string name="verb_replace">교체</string>
+    <string name="verb_inspect">점검</string>
+    <string name="user_default_badge">기본값 · 수정 가능</string>
+
+    <!-- 상태 (6.1) -->
+    <string name="status_GOOD">양호</string>
+    <string name="status_CAUTION">곧 교체</string>
+    <string name="status_DUE">교체 시기</string>
+    <string name="status_CAUTION_inspect">곧 점검</string>
+    <string name="status_DUE_inspect">점검 시기</string>
+    <string name="status_OVERDUE">초과</string>
+    <string name="status_SENSOR_ALERT">차량 감지</string>
+    <string name="status_UNKNOWN">기록 없음</string>
+
+    <!-- 구역 (도식 위치) -->
+    <string name="zone_ENGINE_BAY">앞 모터룸</string>
+    <string name="zone_WINDSHIELD">앞유리</string>
+    <string name="zone_CABIN">실내</string>
+    <string name="zone_UNDERBODY">차체 하부(배터리)</string>
+    <string name="zone_DRIVETRAIN">구동계</string>
+    <string name="zone_WHEELS">바퀴</string>
+    <string name="zone_OTHER">기타</string>
+    <string name="wheel_FRONT_LEFT">앞 왼쪽 바퀴</string>
+    <string name="wheel_FRONT_RIGHT">앞 오른쪽 바퀴</string>
+    <string name="wheel_REAR_LEFT">뒤 왼쪽 바퀴</string>
+    <string name="wheel_REAR_RIGHT">뒤 오른쪽 바퀴</string>
+    <string name="car_location">위치 · %1$s</string>
+
+    <!-- 도식 · 사용 사이클 (명세 v2.0) -->
+    <string name="diag_usage_word">사용</string>
+    <string name="diag_elapsed_word">경과</string>
+    <string name="diag_usage_fmt">%1$s %2$d%%</string>
+    <string name="diag_cycle">%1$d회차</string>
+    <string name="diag_estimated_suffix">(추정)</string>
+    <string name="diag_remaining">%1$s 남음</string>
+    <string name="diag_until_inspect">점검까지 %1$s</string>
+    <string name="diag_until_first">최초 교체까지 %1$s</string>
+    <string name="diag_over">+%1$s 초과</string>
+    <string name="diag_user_prefix">기본 · %1$s</string>
+    <string name="diag_basis_distance">거리 기준</string>
+    <string name="diag_basis_time">기간 기준</string>
+    <string name="diag_factor">%1$s · %2$s</string>
+    <string name="diag_sensor_badge">차량 감지</string>
+    <string name="diag_desc">%1$s, %2$s %3$d퍼센트, %4$s, %5$s, %6$s</string>
+    <string name="diag_desc_unknown">%1$s, %2$s, %3$s</string>
+    <string name="diag_hint">부위나 이름표를 누르면 선택, 한 번 더 누르면 상세로 이동해요</string>
+    <string name="diag_detail">자세히</string>
+    <string name="diag_zoom">확대</string>
+    <string name="diag_bright">음영 밝게</string>
+    <string name="diag_clear">선택 해제</string>
+    <string name="diag_all_good">모든 소모품 양호</string>
+    <string name="diag_glance_title">가장 급한 항목</string>
+    <string name="diag_view_xray">투시</string>
+    <string name="diag_view_exterior">실물</string>
+    <string name="diag_source">근거 · %1$s</string>
+    <string name="diag_approx_note">도식의 부위 위치는 이미지 기준 근사값이에요</string>
+    <string name="cycle_history_title">사용 사이클 이력</string>
+    <string name="cycle_n">%1$d회차</string>
+    <string name="cycle_current">진행 중</string>
+    <string name="cycle_recommended">권장 %1$s</string>
+    <string name="cycle_summary">평균 %1$s 간격 %2$s (권장 %3$s)</string>
+    <string name="cycle_range_open">%1$s ~</string>
+    <string name="cycle_range">%1$s ~ %2$s</string>
+    <string name="cycle_over_suffix"> (+%1$s)</string>
+    <string name="fmt_months_decimal">%1$s개월</string>
+    <string name="fmt_years_decimal">%1$s년</string>
+    <string name="set_periodic_scan">도식 5초 주기 스캔</string>
+    <string name="set_periodic_scan_desc">투시 보기·주차 중에만 초록 스캔선이 5초마다 지나갑니다. 주행 제한·애니메이션 끔·백그라운드에서는 멈춥니다.</string>
+
+    <!-- 값 포맷 -->
+    <string name="fmt_km">%1$s km</string>
+    <string name="fmt_mi">%1$s mi</string>
+    <string name="fmt_days">%1$d일</string>
+    <string name="fmt_weeks">%1$d주</string>
+    <string name="fmt_months">%1$d개월</string>
+    <string name="fmt_about">약 %1$s</string>
+    <string name="fmt_about_or">약 %1$s 또는 %2$s</string>
+    <string name="fmt_over">%1$s 초과</string>
+    <string name="remaining_record_needed">%1$s 기록을 입력하세요</string>
+    <string name="remaining_input_error">기록 확인 필요 · 주행거리 오류</string>
+    <string name="estimated">추정</string>
+
+    <!-- 대시보드 (S1) -->
+    <string name="dash_title">내 차 소모품</string>
+    <string name="dash_odometer_manual">수동 입력</string>
+    <string name="dash_odometer_saved">마지막 저장값</string>
+    <string name="dash_hero_label">가장 급한 항목</string>
+    <string name="dash_hero_due">%1$s · %2$s 후 %3$s</string>
+    <string name="dash_hero_over">%1$s · %2$s · %3$s 필요</string>
+    <string name="dash_hero_good">%1$s · %2$s 남음</string>
+    <string name="dash_hero_unknown">%1$s · %2$s 기록을 입력하세요</string>
+    <string name="dash_record_cta">교체·점검 완료 기록하기</string>
+    <string name="dash_pick_item">어떤 소모품을 교체·점검했나요?</string>
+    <string name="dash_settings">설정</string>
+    <string name="dash_empty">표시할 소모품이 없어요. 설정에서 항목을 켜 주세요.</string>
+    <string name="dash_select_detail">항목을 선택하면 상세 정보가 표시돼요</string>
+    <string name="dash_alert_banner">차량 감지: %1$s · 점검 필요</string>
+    <string name="dash_permission_banner">차량 데이터 권한이 승인되지 않아 수동 주행거리로 계산 중</string>
+
+    <!-- 센서 경고 (FR-C02, S2) -->
+    <string name="alert_ENGINE_OIL">오일 레벨 낮음</string>
+    <string name="alert_BRAKE_FLUID">브레이크액 레벨 낮음</string>
+    <string name="alert_ATF">감속기(변속기) 오일 레벨 낮음</string>
+    <string name="alert_WASHER">워셔액 부족</string>
+    <string name="alert_TIRE">타이어 공기압 낮음</string>
+    <string name="alert_EV_POWER">고전압 시스템 출력 제한 경고</string>
+    <string name="alert_12V">12V 배터리 경고등</string>
+    <string name="alert_card">차량이 %1$s을(를) 감지했습니다. 가까운 정비소에서 점검하세요.</string>
+
+    <!-- 상세 (S2) -->
+    <string name="detail_distance">거리</string>
+    <string name="detail_time">기간</string>
+    <string name="detail_remaining_of">남은 %1$s / %2$s</string>
+    <string name="detail_over_of">%1$s 초과 / %2$s</string>
+    <string name="detail_due_date">예상 %1$s일</string>
+    <string name="detail_basis_distance">거리 기준</string>
+    <string name="detail_basis_time">기간 기준</string>
+    <string name="detail_collecting">주행 데이터 수집 중 · 기간 기준만 표시</string>
+    <string name="detail_last">마지막 %1$s</string>
+    <string name="detail_interval">적용 주기</string>
+    <string name="detail_interval_first">최초 주기</string>
+    <string name="detail_kind">주기 종류</string>
+    <string name="detail_source">근거</string>
+    <string name="detail_history">이력 %1$d건</string>
+    <string name="detail_history_more">더보기</string>
+    <string name="detail_history_less">접기</string>
+    <string name="detail_history_empty">기록이 없어요</string>
+    <string name="detail_edit_interval">주기 수정</string>
+    <string name="detail_replaced">%1$s 완료</string>
+    <string name="detail_record_hint">길게 눌러 수정·삭제</string>
+    <string name="detail_saved">%1$s 기록을 저장했어요</string>
+    <string name="detail_undo">실행 취소</string>
+    <string name="detail_needs_confirm">취급설명서 값으로 주기를 확인하세요 (VERIFY)</string>
+    <string name="cond_NORMAL">통상 조건</string>
+    <string name="cond_SEVERE">가혹 조건</string>
+    <string name="source_VEHICLE_ODO">차량 주행거리</string>
+    <string name="source_MANUAL">직접 입력</string>
+    <string name="source_ESTIMATED">추정 (모름)</string>
+    <string name="record_edit">기록 수정</string>
+    <string name="record_delete">삭제</string>
+    <string name="record_delete_confirm">이 기록을 삭제할까요?</string>
+    <string name="record_action_inspected">점검</string>
+
+    <!-- 교체·점검 기록 (S3) -->
+    <string name="rec_title">%1$s %2$s 기록</string>
+    <string name="rec_default_desc">현재 주행거리와 오늘 날짜로 기록합니다</string>
+    <string name="rec_save_now">이대로 저장</string>
+    <string name="rec_other">다른 날짜·거리로 기록</string>
+    <string name="rec_date">날짜</string>
+    <string name="rec_odometer">당시 주행거리</string>
+    <string name="rec_memo">메모 (정비소명 등)</string>
+    <string name="rec_memo_parked">메모는 주차 중에만 입력할 수 있어요</string>
+    <string name="rec_save">저장</string>
+    <string name="rec_err_future">미래 날짜는 기록할 수 없어요</string>
+    <string name="rec_err_over_odo">현재 주행거리(%1$s)보다 클 수 없어요</string>
+    <string name="rec_warn_before_prev">직전 기록(%1$s)보다 주행거리가 작아요. 그래도 저장할까요?</string>
+    <string name="rec_confirm">저장</string>
+    <string name="rec_keyboard">직접 입력</string>
+
+    <!-- 공통 -->
+    <string name="back">뒤로</string>
+    <string name="cancel">취소</string>
+    <string name="ok">확인</string>
+    <string name="next">다음</string>
+    <string name="done">완료</string>
+    <string name="close">닫기</string>
+    <string name="today">오늘</string>
+    <string name="disclaimer">표시값은 입력한 교체·점검 기록과 주기를 바탕으로 한 추정치이며, 정확한 정비 시기는 차량 취급설명서와 정비소 점검을 따르세요.</string>
+    <string name="manual_notice">주기는 차종·연식별로 달라요. 취급설명서 기준으로 확인하세요 (VERIFY 표시 값은 공식 자료 재확인 필요).</string>
+
+    <!-- 온보딩 (S0) -->
+    <string name="onb_welcome">주행거리와 교체·점검 기록으로 수리자재 교체 시기를 알려드려요.</string>
+    <string name="onb_vehicle">현재 주행거리</string>
+    <string name="onb_odo_manual">차량 주행거리를 가져올 수 없어요. 계기판 값을 입력해 주세요.</string>
+    <string name="onb_powertrain">파워트레인을 선택하세요</string>
+    <string name="pt_ICE">내연기관</string>
+    <string name="pt_HEV">하이브리드</string>
+    <string name="pt_EV">전기차</string>
+    <string name="onb_condition">운행 조건을 선택하세요</string>
+    <string name="onb_severe_help">하나라도 해당하면 가혹 조건을 권장해요</string>
+    <string name="severe_1">짧은 거리 반복 주행</string>
+    <string name="severe_2">교통 체증이 잦은 도심 주행</string>
+    <string name="severe_3">잦은 급가속·급감속</string>
+    <string name="severe_4">산길·비포장도로 주행</string>
+    <string name="severe_5">영업용·장시간 공회전</string>
+    <string name="onb_recommend_severe">가혹 조건 권장</string>
+    <string name="onb_last">마지막 교체·점검 시점</string>
+    <string name="onb_opt_recent">최근 교체·점검함</string>
+    <string name="onb_opt_input">날짜·거리 입력</string>
+    <string name="onb_opt_unknown">모름</string>
+    <string name="onb_unknown_help">모름은 오늘부터 추적하고 "추정"으로 표시해요</string>
+    <string name="onb_summary">준비 완료</string>
+    <string name="onb_summary_desc">%1$s · %2$s · 항목 %3$d개</string>
+    <string name="onb_start">시작하기</string>
+    <string name="onb_step">%1$d / %2$d</string>
+
+    <!-- 설정 (S4) -->
+    <string name="set_title">설정</string>
+    <string name="set_condition">운행 조건</string>
+    <string name="set_powertrain">파워트레인</string>
+    <string name="set_items">항목 표시 · 주기</string>
+    <string name="set_add_custom">사용자 항목 추가 (%1$d/5)</string>
+    <string name="set_custom_name">항목 이름</string>
+    <string name="set_custom_delete">항목 삭제</string>
+    <string name="set_thresholds">상태 임계값</string>
+    <string name="set_caution_ratio">곧 교체 기준 (남은 수명 %)</string>
+    <string name="set_due_ratio">교체 시기 기준 (남은 수명 %)</string>
+    <string name="set_caution_km">곧 교체 기준 (남은 거리 km)</string>
+    <string name="set_caution_days">곧 교체 기준 (남은 기간 일)</string>
+    <string name="set_unit">거리 단위</string>
+    <string name="set_manual_odo">수동 주행거리 보정</string>
+    <string name="set_manual_odo_desc">차량 주행거리를 가져올 수 없을 때 사용돼요</string>
+    <string name="set_reset">데이터 초기화</string>
+    <string name="set_reset_confirm1">모든 교체·점검 기록과 설정을 삭제할까요?</string>
+    <string name="set_reset_confirm2">정말 삭제할까요? 되돌릴 수 없어요.</string>
+    <string name="set_about">앱 정보 · 업데이트</string>
+    <string name="set_version">현재 버전 %1$s</string>
+    <string name="set_update_guide">Pleos App Market은 자동 업데이트를 지원하지 않아요. 차량 화면에서 App Market › 내 앱 › Cartalog를 열어 [업데이트]를 눌러 주세요.</string>
+    <string name="set_locked_driving">주행 중에는 설정을 변경할 수 없어요</string>
+    <string name="set_dev">개발자 옵션</string>
+    <string name="set_dev_scenario">차량 시나리오 (mock)</string>
+    <string name="set_vehicle_api">차량 연동 상태</string>
+    <string name="set_vehicle_api_desc">Pleos Vehicle SDK에서 읽어 오는 값이에요. 연동되지 않는 품목은 주행거리·기간으로 계산합니다.</string>
+    <string name="set_trip">누적 트립</string>
+    <string name="set_trip_value">%1$s · 운전 %2$s · 평균 %3$s km/h</string>
+    <string name="set_trip_distance_only">%1$s</string>
+    <string name="set_avg_daily">일평균 주행</string>
+    <string name="set_avg_daily_value">%1$s / 일 (최근 30일)</string>
+    <string name="set_avg_daily_collecting">주행 데이터 수집 중 (7일 필요)</string>
+    <string name="fmt_hours_min">%1$d시간 %2$d분</string>
+    <string name="api_state_CONNECTED">연동됨</string>
+    <string name="api_state_NO_VALUE">값 없음</string>
+    <string name="api_state_UNSUPPORTED">미지원</string>
+    <string name="api_state_PERMISSION_DENIED">권한 없음</string>
+    <string name="api_state_FAILED">오류</string>
+    <string name="api_state_PENDING">확인 중</string>
+    <string name="api_ODOMETER">누적 주행거리 · 모든 품목의 거리 계산</string>
+    <string name="api_TRIP_DISTANCE">누적 트립 거리</string>
+    <string name="api_TRIP_TIME">누적 운전 시간 · 평균 속도</string>
+    <string name="api_BRAKE_FLUID">브레이크액 레벨</string>
+    <string name="api_TRANSMISSION_OIL">감속기 오일 레벨</string>
+    <string name="api_ENGINE_OIL">엔진오일 레벨 (내연기관·하이브리드)</string>
+    <string name="api_WASHER">워셔액 부족 · 와이퍼</string>
+    <string name="api_POWER_DOWN">출력 제한 경고 · 고전압 배터리</string>
+    <string name="api_EV_SOC">충전량 · 고전압 배터리</string>
+    <string name="api_TIRE_THRESHOLD">타이어 저압 기준값</string>
+    <string name="api_TIRE_PRESSURE">타이어 현재 공기압 (시스템 권한)</string>
+    <string name="api_TELLTALES">경고등 · 12V 배터리, TPMS (시스템 권한)</string>
+    <string name="set_dev_add_km">주행 +500 km</string>
+    <string name="set_dev_force_do">주행 제한 강제 (DO 테스트)</string>
+    <string name="interval_km">거리 주기</string>
+    <string name="interval_months">기간 주기</string>
+    <string name="interval_none">없음</string>
+    <string name="interval_title">%1$s 주기</string>
+    <string name="interval_normal">통상</string>
+    <string name="interval_severe">가혹</string>
+
+    <!-- 3탭 구조 (설계서 v3) -->
+    <string name="tab_vehicle">차량</string>
+    <string name="tab_dashboard">대시보드</string>
+    <string name="tab_timeline">타임라인</string>
+    <string name="odo_caption">%1$s · 내 차 소모품</string>
+    <string name="odo_total">누적 주행</string>
+    <string name="sum_due">교체</string>
+    <string name="sum_caution">곧 점검</string>
+    <string name="sum_good">양호</string>
+    <string name="legend_due">교체 시기</string>
+    <string name="filter_all">전체 %1$d</string>
+    <string name="filter_n">%1$s %2$d</string>
+    <string name="dock_hint">부위나 칩을 누르면 상세가 바뀌어요 · 빈 곳을 누르면 선택 해제</string>
+    <string name="more">더 보기</string>
+    <string name="suffix_until">후 %1$s</string>
+    <string name="suffix_left">남음</string>
+    <string name="suffix_over">초과</string>
+    <string name="cta_record_item">%1$s · %2$s 완료 기록</string>
+    <string name="action_done">완료</string>
+    <string name="action_done_verb">%1$s 완료</string>
+    <string name="dist_remaining">남은 거리/기간</string>
+    <string name="cycle_box">사용 사이클 %1$d회차</string>
+    <string name="user_default_meta">기본값(수정 가능)</string>
+    <string name="hist_n">이력 %1$d건</string>
+    <string name="diag_zoom_toggle">확대</string>
+    <string name="diag_bright_toggle">밝기</string>
+    <string name="tl_title">다가오는 일정</string>
+    <string name="tl_hint">거리와 기간, 먼저 오는 쪽 기준 · 마커를 누르면 위 카드가 바뀌어요</string>
+    <string name="tl_lane_km">거리 기준</string>
+    <string name="tl_lane_km_sub">앞으로 %1$s</string>
+    <string name="tl_lane_time">기간 기준</string>
+    <string name="tl_lane_time_sub">앞으로 %1$d개월</string>
+    <string name="tl_beyond">%1$s 이후</string>
+    <string name="tl_none">해당 없음</string>
+    <string name="tl_now">지금</string>
+    <string name="tl_spare">여유</string>
+    <string name="tl_back_urgent">가장 급한 항목으로</string>
+    <string name="tl_hero_line">%1$s %2$s · 예상 %3$s</string>
+    <string name="tl_hero_meta">%1$s · 주기 %2$s</string>
+    <string name="s5_note">주행 중에는 조작할 수 없어요 · 정차 후 전체 화면</string>
+    <string name="s5_sub">정차 후 전체 화면에서 기록·주기 수정을 할 수 있어요</string>
+    <string name="interval_locked">정기 점검표 주기는 설정 › 항목 표시 · 주기에서 바꿀 수 있어요</string>
+
+    <!-- 차량 실측값 (Pleos Vehicle API 매칭) -->
+    <string name="live_title">차량 데이터</string>
+    <string name="live_link">차량 연동</string>
+    <string name="live_no_api">해당 API 없음 · 주행거리·기간으로 계산</string>
+    <string name="live_unsupported">이 차량에서 지원하지 않음</string>
+    <string name="live_no_permission">시스템 권한 필요 · 읽을 수 없음</string>
+    <string name="live_level_normal">정상</string>
+    <string name="live_level_low">낮음</string>
+    <string name="live_level_critical">매우 낮음</string>
+    <string name="live_level_high">높음</string>
+    <string name="live_level_error">센서 오류</string>
+    <string name="live_brake_fluid">브레이크액 레벨</string>
+    <string name="live_gear_oil">감속기 오일 레벨</string>
+    <string name="live_engine_oil">엔진오일 레벨</string>
+    <string name="live_washer">워셔액</string>
+    <string name="live_washer_low">부족</string>
+    <string name="live_tire_pressure">현재 공기압</string>
+    <string name="live_tire_threshold">저압 기준</string>
+    <string name="live_tpms">TPMS 경고등</string>
+    <string name="live_soc">현재 충전량</string>
+    <string name="live_power_down">출력 제한 경고</string>
+    <string name="live_12v_lamp">12V 배터리 경고등</string>
+    <string name="live_lamp_on">켜짐</string>
+    <string name="live_lamp_off">꺼짐</string>
+    <string name="live_detected">감지됨</string>
+    <string name="live_none">없음</string>
+    <string name="fmt_kpa">%1$s kPa</string>
+    <string name="wheel_short_FL">앞왼</string>
+    <string name="wheel_short_FR">앞오</string>
+    <string name="wheel_short_RL">뒤왼</string>
+    <string name="wheel_short_RR">뒤오</string>
+
+    <!-- 알림 (FR-N01) -->
+    <string name="notif_channel">소모품 상태 변화</string>
+    <string name="notif_caution">%1$s %2$s 시기가 다가와요</string>
+    <string name="notif_due">%1$s %2$s 시기예요</string>
+    <string name="notif_overdue">%1$s %2$s 주기를 넘었어요</string>
+    <string name="notif_sensor">차량이 %1$s 이상을 감지했어요 · 점검하세요</string>
+</resources>

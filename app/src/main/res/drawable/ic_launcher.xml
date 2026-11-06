@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Cartalog 런처 아이콘: 사용량 링(C 모양) + 위에서 본 차량 실루엣 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillColor="#0A0B0E" android:pathData="M54,4a50,50 0,1 1,0 100a50,50 0,1 1,0 -100z"/>
+    <!-- 링 트랙 -->
+    <path android:strokeColor="#2A2E35" android:strokeWidth="8" android:fillColor="#00000000"
+        android:pathData="M54,16a38,38 0,1 1,0 76a38,38 0,1 1,0 -76z"/>
+    <!-- 진행 호: 12시에서 시작해 약 76% — 오른쪽이 열린 C -->
+    <path android:strokeColor="#3DCB82" android:strokeWidth="8" android:fillColor="#00000000"
+        android:strokeLineCap="round"
+        android:pathData="M80.9,27.1a38,38 0,1 0,0 53.8"/>
+    <!-- 위에서 본 차량 (앞 = 왼쪽) -->
+    <path android:fillColor="#F5F6F8"
+        android:pathData="M36,43h33c7,0 12,5 12,11s-5,11 -12,11H36c-7,0 -11,-5 -11,-11s4,-11 11,-11z"/>
+    <path android:fillColor="#15171B"
+        android:pathData="M44,47.500h20c3,0 5,2.900 5,6.500s-2,6.500 -5,6.500H44c-2.600,0 -4.500,-2.900 -4.500,-6.500s1.900,-6.500 4.500,-6.500z"/>
+    <path android:fillColor="#3D7BFF"
+        android:pathData="M33,40.500h9v3h-9zM33,64.500h9v3h-9zM60,40.500h9v3h-9zM60,64.500h9v3h-9z"/>
+</vector>

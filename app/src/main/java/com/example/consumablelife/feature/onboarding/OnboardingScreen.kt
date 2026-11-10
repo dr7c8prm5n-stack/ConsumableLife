@@ -2,6 +2,7 @@ package com.example.consumablelife.feature.onboarding
 
 import android.Manifest
 import android.os.Build
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -11,7 +12,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
@@ -22,7 +22,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DirectionsCar
 import androidx.compose.material.icons.filled.Science
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -76,6 +75,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -95,14 +95,30 @@ class OnboardingViewModel @Inject constructor(
     val capabilities: StateFlow<VehicleCapabilities> = vehicle.capabilities
     val presets = MutableStateFlow<List<ConsumableItem>>(emptyList())
 
+    /** 온보딩 저장 완료 여부 — 화면 전환은 콜백이 아니라 이 저장 상태를 보고 한다 (액티비티 재생성·권한 다이얼로그에 영향받지 않음) */
+    val done: StateFlow<Boolean> = repo.settings.map { it.onboardingDone }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), false)
+
+    /** 저장 실패 메시지 (null = 정상). 실패 시 시작 버튼을 다시 활성화한다 */
+    private val _error = MutableStateFlow<String?>(null)
+    val error: StateFlow<String?> = _error
+
+    private fun complete(block: suspend () -> Unit) = viewModelScope.launch {
+        _error.value = null
+        runCatching { block() }.onFailure {
+            Log.e(TAG, "onboarding finish failed", it)
+            _error.value = it.message ?: it.javaClass.simpleName
+        }
+    }
+
     init {
         viewModelScope.launch { presets.value = repo.presetItems() }
     }
 
     fun finish(
         powertrain: Powertrain, condition: Condition, odoKm: Double, manualMode: Boolean,
-        choices: Map<String, Triple<LastChoice, Long, Int>>, vehicleOdo: Boolean, onDone: () -> Unit,
-    ) = viewModelScope.launch {
+        choices: Map<String, Triple<LastChoice, Long, Int>>, vehicleOdo: Boolean,
+    ) = complete {
         val today = LocalDate.now()
         val recs = presets.value.filter { it.appliesTo(powertrain) }.map { item ->
             val (c, epochDay, odo) = choices[item.id] ?: Triple(LastChoice.UNKNOWN, today.toEpochDay(), odoKm.roundToInt())
@@ -117,7 +133,6 @@ class OnboardingViewModel @Inject constructor(
             powertrain, condition, if (manualMode) odoKm else null, recs,
             seedDemoSnapshots = BuildConfig.FLAVOR == "mock",
         )
-        onDone()
     }
 
     /**
@@ -125,7 +140,7 @@ class OnboardingViewModel @Inject constructor(
      * 와이퍼 초과, 12V 배터리·타이어 마모 교체 시기, 에어컨 필터·감속기 오일 곧 교체/점검, 나머지 양호.
      * 출고 후 한 번도 손대지 않은 품목은 출고(29개월 전, 0 km) 기준 추정 기록.
      */
-    fun startDemo(odoKm: Double, onDone: () -> Unit) = viewModelScope.launch {
+    fun startDemo(odoKm: Double) = complete {
         val t = LocalDate.now()
         fun r(id: String, usedKm: Double, monthsAgo: Long, daysAgo: Long = 0, action: RecordAction = RecordAction.REPLACED) =
             InitialRecord(id, (odoKm - usedKm).coerceAtLeast(0.0), t.minusMonths(monthsAgo).minusDays(daysAgo), RecordSource.MANUAL, action)
@@ -147,8 +162,9 @@ class OnboardingViewModel @Inject constructor(
             ),
             seedDemoSnapshots = true,
         )
-        onDone()
     }
+
+    private companion object { const val TAG = "Cartalog" }
 }
 
 @Composable
@@ -157,11 +173,12 @@ fun OnboardingScreen(onDone: () -> Unit, vm: OnboardingViewModel = hiltViewModel
     val odoState by vm.odometer.collectAsStateWithLifecycle()
     val caps by vm.capabilities.collectAsStateWithLifecycle()
     val presets by vm.presets.collectAsStateWithLifecycle()
+    val done by vm.done.collectAsStateWithLifecycle()
+    val error by vm.error.collectAsStateWithLifecycle()
 
     var step by rememberSaveable { mutableStateOf(0) }
     var powertrain by rememberSaveable { mutableStateOf<Powertrain?>(Powertrain.EV) } // 아이오닉 5 프로필 기본값
-    var condition by rememberSaveable { mutableStateOf(Condition.NORMAL) }
-    val severeChecks = rememberSaveable(saver = listSaver()) { mutableStateMapOf<Int, Boolean>() }
+    val condition = Condition.NORMAL // 운행 조건은 온보딩에서 묻지 않고 설정에서 변경
     var manualOdo by rememberSaveable { mutableStateOf<Int?>(null) }
     var finishing by rememberSaveable { mutableStateOf(false) }
     // itemId → (선택, 날짜 epochDay, 주행거리)
@@ -169,13 +186,17 @@ fun OnboardingScreen(onDone: () -> Unit, vm: OnboardingViewModel = hiltViewModel
 
     val notifPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { }
 
+    // 저장이 끝나면(onboardingDone=true) 대시보드로. 저장 실패 시 버튼을 되살려 다시 시도할 수 있게 한다.
+    LaunchedEffect(done) { if (done) onDone() }
+    LaunchedEffect(error) { if (error != null) finishing = false }
+
     val manualMode = caps.resolved && (!caps.odometer || caps.permissionDenied) || odoState?.source == OdoSource.MANUAL || odoState?.source == OdoSource.NONE
     val vehicleKm = odoState?.takeIf { it.source == OdoSource.VEHICLE || it.source == OdoSource.LAST_SAVED }?.km
     LaunchedEffect(manualMode, vehicleKm) {
         if (manualOdo == null) manualOdo = (vehicleKm ?: 0.0).roundToInt()
     }
     val odoKm = if (manualMode) (manualOdo ?: 0).toDouble() else vehicleKm ?: 0.0
-    val total = 5
+    val total = 4
 
     Column(
         Modifier
@@ -213,7 +234,7 @@ fun OnboardingScreen(onDone: () -> Unit, vm: OnboardingViewModel = hiltViewModel
                     if (BuildConfig.FLAVOR == "mock") {
                         BigButton(
                             "데모 데이터로 바로 시작 (mock · 아이오닉 5)",
-                            onClick = { if (!finishing) { finishing = true; vm.startDemo(odoKm, onDone) } },
+                            onClick = { if (!finishing) { finishing = true; vm.startDemo(odoKm) } },
                             modifier = Modifier.fillMaxWidth(), icon = Icons.Filled.Science, primary = false,
                         )
                     }
@@ -228,28 +249,7 @@ fun OnboardingScreen(onDone: () -> Unit, vm: OnboardingViewModel = hiltViewModel
                         )
                     }
                 }
-                2 -> SectionCard {
-                    Text(stringResource(R.string.onb_condition), style = MaterialTheme.typography.headlineSmall)
-                    ChoiceRow(listOf(Condition.NORMAL, Condition.SEVERE), condition, { conditionLabel(ctx, it) }, { condition = it })
-                    Text(stringResource(R.string.onb_severe_help), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    // FR-I03 가혹 조건 판단 도우미
-                    listOf(R.string.severe_1, R.string.severe_2, R.string.severe_3, R.string.severe_4, R.string.severe_5).forEachIndexed { i, res ->
-                        Row(
-                            Modifier.fillMaxWidth().heightIn(min = 64.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Checkbox(checked = severeChecks[i] == true, onCheckedChange = {
-                                severeChecks[i] = it
-                                if (severeChecks.values.any { v -> v }) condition = Condition.SEVERE
-                            }, modifier = Modifier.size(56.dp))
-                            Text(stringResource(res), style = MaterialTheme.typography.bodyLarge)
-                        }
-                    }
-                    if (severeChecks.values.any { it }) {
-                        Text(stringResource(R.string.onb_recommend_severe), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
-                    }
-                }
-                3 -> {
+                2 -> {
                     Text(stringResource(R.string.onb_last), style = MaterialTheme.typography.headlineSmall)
                     Text(stringResource(R.string.onb_unknown_help), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     presets.filter { it.appliesTo(powertrain) && !it.activeInterval(condition, 1).isEmpty }.forEach { item ->
@@ -300,6 +300,7 @@ fun OnboardingScreen(onDone: () -> Unit, vm: OnboardingViewModel = hiltViewModel
                         style = MaterialTheme.typography.titleMedium,
                     )
                     Text(stringResource(R.string.disclaimer), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    error?.let { Text(stringResource(R.string.onb_save_failed, it), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.error) }
                 }
             }
 
@@ -309,7 +310,7 @@ fun OnboardingScreen(onDone: () -> Unit, vm: OnboardingViewModel = hiltViewModel
                 }
                 val canNext = when (step) {
                     1 -> powertrain != null
-                    3 -> presets.isNotEmpty()
+                    2 -> presets.isNotEmpty()
                     else -> true
                 }
                 if (step < total - 1) {
@@ -323,7 +324,7 @@ fun OnboardingScreen(onDone: () -> Unit, vm: OnboardingViewModel = hiltViewModel
                             if (Build.VERSION.SDK_INT >= 33) notifPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
                             vm.finish(
                                 powertrain ?: Powertrain.EV, condition, odoKm, manualMode, choices.toMap(),
-                                vehicleOdo = !manualMode, onDone = onDone,
+                                vehicleOdo = !manualMode,
                             )
                         },
                         modifier = Modifier.weight(1f), enabled = !finishing,
@@ -334,13 +335,6 @@ fun OnboardingScreen(onDone: () -> Unit, vm: OnboardingViewModel = hiltViewModel
         }
     }
 }
-
-private fun listSaver() = androidx.compose.runtime.saveable.Saver<
-    androidx.compose.runtime.snapshots.SnapshotStateMap<Int, Boolean>, List<Int>,
-    >(
-    save = { m -> m.filterValues { it }.keys.toList() },
-    restore = { l -> mutableStateMapOf<Int, Boolean>().apply { l.forEach { put(it, true) } } },
-)
 
 private fun choiceSaver() = androidx.compose.runtime.saveable.Saver<
     androidx.compose.runtime.snapshots.SnapshotStateMap<String, Triple<LastChoice, Long, Int>>, List<String>,
